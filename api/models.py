@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from rest_framework.authtoken.models import Token
@@ -59,3 +60,4 @@ class Orders(models.Model):
     order_date = models.DateField(auto_now_add=True)
     quantity = models.IntegerField(blank=True)
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, blank=True)
+
