@@ -141,3 +141,22 @@ class CreateOrderView(APIView):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class OrderListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        print(user.username)
+        if user.role == "customer":
+            customer_id = self.request.data.get('customer_id')
+            return Orders.objects.filter(customer_id=customer_id)
+        elif user.role == "farmer":
+            return Orders.objects.filter(
+                 #farmer=user.farmer_account,order_status=("accepted"))
+                 farmer=user.farmer_account
+            )
+        else:
+            print("nothing")
+            return Orders.objects.none()
