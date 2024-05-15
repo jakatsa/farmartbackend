@@ -160,3 +160,40 @@ class OrderListView(generics.ListAPIView):
         else:
             print("nothing")
             return Orders.objects.none()
+
+class OrderAcceptView(APIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    def put(self, request, pk):
+        user = request.user
+        if user.role != "farmer":
+            return Response(
+                {"message": "Only farmers can update order status"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        try:
+            order = Orders.objects.get(pk=pk)
+        except Orders.DoesNotExist:
+            return Response(
+                {"message": "Order not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        action = request.data.get("action")
+        if action == "accept":
+            order.order_status = "accepted"
+            order.save()
+        elif action == "deny":
+            animal = order.animal
+            quantity = order.quantity
+            animal.available += quantity
+            animal.save()
+
+            order.order_status = "denied"
+            order.save()
+        else:
+            return Response(
+                {"message": "Invalid action"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response({"message": f"Order {action.capitalize()}ed successfully"})
