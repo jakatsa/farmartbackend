@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'api',
-      "corsheaders",
+     "corsheaders",
 ]
 AUTH_USER_MODEL = "api.User"
 REST_FRAMEWORK = {
@@ -50,7 +50,7 @@ REST_FRAMEWORK = {
     ],
 }
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",#cors
+        "corsheaders.middleware.CorsMiddleware",#cors
     "django.middleware.common.CommonMiddleware",#cors
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,4 +136,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOW_ALL_ORIGINS=True #cors
+CORS_ALLOW_ALL_ORIGINS=True#cors
