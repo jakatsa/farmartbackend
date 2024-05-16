@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'api',
+  
 ]
 AUTH_USER_MODEL = "api.User"
 REST_FRAMEWORK = {
@@ -49,6 +50,9 @@ REST_FRAMEWORK = {
     ],
 }
 MIDDLEWARE = [
+
+
+      
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
