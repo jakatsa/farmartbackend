@@ -15,7 +15,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 
-
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -25,7 +24,6 @@ class UserProfileView(APIView):
             return Response({'username': user.username})
         else:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
 class UserRegistrationView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -39,7 +37,6 @@ class AnimalViewing(generics.ListCreateAPIView):
     queryset = Animal.objects.all()
     serializer_class = AnimalSerializer
 
-
 class AnimalViewingFarmer(generics.ListCreateAPIView):
     serializer_class = AnimalSerializer
     permission_classes = [IsAuthenticated]
@@ -49,7 +46,6 @@ class AnimalViewingFarmer(generics.ListCreateAPIView):
         if user.role == "farmer":
             return Animal.objects.filter(farmer=user.farmer_account)
         return Animal.objects.none()
-
 class CustomerRegistrationView(APIView):
     def post(self, request):
         serializer = CustomerSerializer(data=request.data)
@@ -74,7 +70,6 @@ class StudentRegistrationView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -220,4 +215,3 @@ class OrderAcceptView(APIView):
             )
 
         return Response({"message": f"Order {action.capitalize()}ed successfully"})
-
