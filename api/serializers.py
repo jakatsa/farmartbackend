@@ -75,18 +75,24 @@ class AnimalSerializer(serializers.ModelSerializer):
             
             raise serializers.ValidationError("Only farmers can create animals.")
 class OrderSerializer(serializers.ModelSerializer):
+    animal_name = serializers.CharField(source='animal.animal_name', read_only=True)
     class Meta:
         model = Orders
         fields = [
+            "order_id",
             "customer",
             "animal",
             "quantity",
-            "order_status"
-        ]  
-
+            "order_status",
+            "animal_name"
+        ]
+       # fields = '__all__'
+        
+        
     def create(self, validated_data):
-        
+        animal = validated_data["animal"]
+        print(animal)
         validated_data["order_date"] = timezone.now()
-        
+        validated_data["animal_name"] = animal.animal_name
         validated_data["order_status"] = "pending"
         return super().create(validated_data)
