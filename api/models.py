@@ -60,4 +60,3 @@ class Orders(models.Model):
     animal_name=models.CharField(max_length=30,blank=True)
     quantity = models.IntegerField(blank=True)
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, blank=True)
-
