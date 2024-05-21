@@ -16,6 +16,8 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 black = "*"
 pillow = "*"
+dj-database-url = "*"
+gunicorn = "*"
 
 [dev-packages]
 
