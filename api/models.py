@@ -1,7 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
-from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
@@ -39,14 +36,13 @@ class Animal(models.Model):
     animal_id = models.AutoField(primary_key=True)
     animal_name = models.CharField(max_length=50)
     animal_type = models.CharField(max_length=50)
-    animal_age = models.IntegerField()
+    animal_age = models.CharField(max_length=10)
     animal_location = models.CharField(max_length=30)
     animal_breed = models.CharField(max_length=20)
     available = models.IntegerField()
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="animals")
     animal_price = models.IntegerField()
     animal_description = models.CharField(max_length=200)
-
 
 class Orders(models.Model):
     ORDER_STATUS = (
@@ -61,6 +57,6 @@ class Orders(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE, related_name="orders")
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="orders")
     order_date = models.DateField(auto_now_add=True)
+    animal_name=models.CharField(max_length=30,blank=True)
     quantity = models.IntegerField(blank=True)
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, blank=True)
-
