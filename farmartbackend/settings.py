@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8=*3u5+vebaka^-xw9il6d=$!_p73s%1xk4n+gyb*b$)w#qv*+'
-
+DEBUG = os.environ.get("DEBUG","FALSE")==True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -97,7 +98,8 @@ DATABASES = {
     }
 }
 
-
+DATABASES["default"]=dj_database_url.parse("postgres://farmartdb_user:dPdgOd7DVN7mnRdusRVB5pZMpXUtWN4h@dpg-cp6b11021fec738f1b6g-a.oregon-postgres.render.com/farmartdb")
+#postgres://farmartdb_user:dPdgOd7DVN7mnRdusRVB5pZMpXUtWN4h@dpg-cp6b11021fec738f1b6g-a.oregon-postgres.render.com/farmartdb
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
