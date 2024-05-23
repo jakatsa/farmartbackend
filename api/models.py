@@ -13,6 +13,9 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=15, choices=ROLE_CHOICES)
 
+    class Meta:
+        app_label = 'api'
+
 
 class Customer(models.Model):
     profile_picture = models.ImageField(default="fall.png", blank=True)
