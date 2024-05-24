@@ -31,7 +31,7 @@ urlpatterns = [
         name="farmer-registration",
     ),
     path(
-        "api/customer/register/",
+        "api/custome/register/",
         CustomerRegistrationView.as_view(),
         name="customer-registration",
     ),
