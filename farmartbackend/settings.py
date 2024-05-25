@@ -98,7 +98,7 @@ DATABASES = {
     }
 }
 
-# DATABASES["default"]=dj_database_url.parse("postgres://farmartdb_user:dPdgOd7DVN7mnRdusRVB5pZMpXUtWN4h@dpg-cp6b11021fec738f1b6g-a.oregon-postgres.render.com/farmartdb")
+DATABASES["default"]=dj_database_url.parse("postgres://farmartdb_user:dPdgOd7DVN7mnRdusRVB5pZMpXUtWN4h@dpg-cp6b11021fec738f1b6g-a.oregon-postgres.render.com/farmartdb")
 #postgres://farmartdb_user:dPdgOd7DVN7mnRdusRVB5pZMpXUtWN4h@dpg-cp6b11021fec738f1b6g-a.oregon-postgres.render.com/farmartdb
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
