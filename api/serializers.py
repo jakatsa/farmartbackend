@@ -74,6 +74,7 @@ class AnimalSerializer(serializers.ModelSerializer):
         else:
             
             raise serializers.ValidationError("Only farmers can create animals.")
+        
 class OrderSerializer(serializers.ModelSerializer):
     animal_name = serializers.CharField(source='animal.animal_name', read_only=True)
     class Meta:
@@ -96,3 +97,7 @@ class OrderSerializer(serializers.ModelSerializer):
         validated_data["animal_name"] = animal.animal_name
         validated_data["order_status"] = "pending"
         return super().create(validated_data)
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'

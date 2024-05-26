@@ -65,3 +65,18 @@ class Orders(models.Model):
     animal_name=models.CharField(max_length=30,blank=True)
     quantity = models.IntegerField(blank=True)
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, blank=True)
+
+class AccessToken(models.Model):
+    token = models.CharField(max_length=255)
+    expires_at = models.DateTimeField()
+
+    def __str__(self):
+        return self.token
+
+class Cart(models.Model):
+    animal_picture = models.CharField()
+    cart_id = models.AutoField(primary_key=True)
+    animal_name = models.CharField(max_length=50)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="animals")
+    animal_price = models.IntegerField()
+    animal_description = models.CharField(max_length=200)

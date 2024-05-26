@@ -18,6 +18,7 @@ black = "*"
 pillow = "*"
 dj-database-url = "*"
 gunicorn = "*"
+django-daraja = "*"
 
 [dev-packages]
 
