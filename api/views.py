@@ -260,7 +260,7 @@ class CartDetails(APIView):
     
     def get(self, request):
         products = Cart.objects.all()
-        serializer = CartSerializer(products, many=True)
+        serializer = CartSerializer(products)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
