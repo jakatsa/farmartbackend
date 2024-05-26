@@ -13,7 +13,8 @@ from api.views import (
     OrderAcceptView,
     UserProfileView,
     AnimalViewingFarmer,
-    AnimalViewDetails
+    AnimalViewDetails,
+    Payment
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -32,6 +33,7 @@ urlpatterns = [
     path('api/animals/<int:animal_id>', AnimalViewDetails.as_view(), name = "animal-details"),
     path('api/daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('api/payments', views.index, name = "payment"),
+    path("api/mpesapayment", Payment.as_view(), name = "payments"),
 
     #path(
        # "api/auth/register/", UserRegistrationView.as_view(), name="user-registration"
