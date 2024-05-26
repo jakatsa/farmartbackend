@@ -1,10 +1,11 @@
-from api.models import User, Customer, Farmer, Animal,Orders
+from api.models import User, Customer, Farmer, Animal,Orders, AccessToken, Cart
 from api.serializers import (
     UserSerializer,
     FarmerSerializer,
     CustomerSerializer,
     AnimalSerializer,
     OrderSerializer,
+    CartSerializer
 )
 from django.contrib.auth import authenticate, login
 from rest_framework import status
@@ -14,7 +15,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django_daraja.mpesa.core import MpesaClient
+
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -224,7 +227,6 @@ class AnimalViewDetails(APIView):
         except Animal.DoesNotExist:
             raise Http404
         
-
     def get(self, request, animal_id):
         try:
             product = self.get_object(animal_id)
@@ -232,3 +234,62 @@ class AnimalViewDetails(APIView):
             return Response(serializer.data, status = status.HTTP_200_OK)
         except Animal.DoesNotExist:
             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+class CartDetails(APIView):
+    def get_object(self, cart_id):
+        try:
+            return Cart.objects.get(cart_id = cart_id)
+        except Cart.DoesNotExist:
+            raise Http404
+        
+    def get(self, request, cart_id):
+        try:
+            product = self.get_object(cart_id)
+            serializer = CartSerializer(product)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        except Cart.DoesNotExist:
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request):
+        serializer = CartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+def index(request):
+    cl = MpesaClient()
+    # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
+    phone_number = '0792708171'
+    amount = 1
+    account_reference = 'reference'
+    transaction_desc = 'Description'
+    callback_url = 'https://darajambili.herokuapp.com/express-payment';
+    response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+    return HttpResponse(response)
+
+def stk_push_callback(request):
+        data = request.body
+        
+        return HttpResponse("STK Push in Django👋")
+
+class Payment(APIView):
+    def post(self, request):
+        cl = MpesaClient()
+        # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
+        phone_number = request.data.get("phone_number")
+        amount = request.data.get("amount")
+        account_reference = 'reference'
+        transaction_desc = 'Description'
+        callback_url = 'https://darajambili.herokuapp.com/express-payment';
+        response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+        return HttpResponse(response)
+
+def stk_push_callback(request):
+    data = request.body
+    
+    return HttpResponse("STK Push in Django👋")
