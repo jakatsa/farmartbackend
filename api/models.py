@@ -39,7 +39,7 @@ class Animal(models.Model):
     animal_id = models.AutoField(primary_key=True)
     animal_name = models.CharField(max_length=50)
     animal_type = models.CharField(max_length=50)
-    animal_age = models.CharField(max_length=10)
+    animal_age = models.IntegerField()
     animal_location = models.CharField(max_length=30)
     animal_breed = models.CharField(max_length=20)
     available = models.IntegerField()
