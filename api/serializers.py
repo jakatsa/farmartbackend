@@ -74,6 +74,7 @@ class AnimalSerializer(serializers.ModelSerializer):
         else:
             
             raise serializers.ValidationError("Only farmers can create animals.")
+        
 class OrderSerializer(serializers.ModelSerializer):
     animal_name = serializers.CharField(source='animal.animal_name', read_only=True)
     class Meta:
