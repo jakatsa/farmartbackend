@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Customer, Farmer, Animal, Orders, Cart
+from .models import User, Customer, Farmer, Animal, Orders, Cart, ViewCart, CartItem
 from django.utils import timezone
 
 class UserSerializer(serializers.ModelSerializer):
@@ -99,7 +99,22 @@ class OrderSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class CartSerializer(serializers.ModelSerializer):
-    
+      
     class Meta:
         model = Cart
-        fields = '__all__'
+        # fields = ['animal_image', 'cart_id', 'animal_name', 'animal_price','animal_description']
+        fields = "__all__"
+
+class ViewCartSerializer(serializers.ModelSerializer):
+      
+    class Meta:
+        model = ViewCart
+        # fields = ['animal_image', 'cart_id', 'animal_name', 'animal_price','animal_description']
+        fields = "__all__"
+
+class CartItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CartItem
+
+        fields = "__all__"

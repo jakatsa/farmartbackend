@@ -1,11 +1,13 @@
-from api.models import User, Customer, Farmer, Animal,Orders, AccessToken, Cart
+from api.models import User, Customer, Farmer, Animal,Orders, AccessToken, Cart, ViewCart, CartItem
 from api.serializers import (
     UserSerializer,
     FarmerSerializer,
     CustomerSerializer,
     AnimalSerializer,
     OrderSerializer,
-    CartSerializer
+    CartSerializer,
+    ViewCartSerializer,
+    CartItemSerializer
 )
 from django.contrib.auth import authenticate, login
 from rest_framework import status
@@ -236,34 +238,58 @@ class AnimalViewDetails(APIView):
             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
-class CartDetails(APIView):
-    def get_object(self, cart_id):
-        try:
-            return Cart.objects.get(cart_id = cart_id)
-        except Cart.DoesNotExist:
-            raise Http404
+# class CartDetails(APIView):
+#     def get_object(self, cart_id):
+#         try:
+#             return Cart.objects.get(cart_id = cart_id)
+#         except Cart.DoesNotExist:
+#             raise Http404
         
-    def get(self, request, cart_id):
-        try:
-            product = self.get_object(cart_id)
-            serializer = CartSerializer(product)
-            return Response(serializer.data, status = status.HTTP_200_OK)
-        except Cart.DoesNotExist:
-            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, cart_id):
+#         try:
+#             product = self.get_object(cart_id)
+#             serializer = CartSerializer(product)
+#             return Response(serializer.data, status = status.HTTP_200_OK)
+#         except Cart.DoesNotExist:
+#             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
-    def post(self, request):
-        serializer = CartSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request):
+#         serializer = CartSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#     def get(self, request):
+#         products = Cart.objects.all()
+#         serializer = CartSerializer(products)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ViewCartDetails(APIView):
+    # def get_object(self, cart_id):
+    #     try:
+    #         return ViewCart.objects.get(cart_id = cart_id)
+    #     except ViewCart.DoesNotExist:
+    #         raise Http404
+        
+    # def get(self, request, cart_id):
+    #     try:
+    #         carts = self.get_object(cart_id)
+    #         serializer = ViewCartSerializer(carts)
+    #         return Response(serializer.data, status = status.HTTP_200_OK)
+    #     except ViewCart.DoesNotExist:
+    #         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
     
     def get(self, request):
-        products = Cart.objects.all()
-        serializer = CartSerializer(products)
+        products = ViewCart.objects.all()
+        serializer = ViewCartSerializer(products)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+class CartViewModelDetails(APIView):
+    def get(self, request):
+        products = CartItem.objects.all()
+        serializer = CartItemSerializer(products)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 def index(request):

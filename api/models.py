@@ -72,11 +72,29 @@ class AccessToken(models.Model):
         return self.token
 
 class Cart(models.Model):
-    image = models.CharField(max_length=100)
+    animal_image = models.CharField(max_length=50)
     cart_id = models.AutoField(primary_key=True)
     animal_name = models.CharField(max_length=50)
     animal_price = models.IntegerField()
     animal_description = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.image
+class ViewCart(models.Model):
+    image = models.CharField(max_length=50)
+    cart_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    price = models.IntegerField()
+    description = models.CharField(max_length=200)
+
+class CartItem(models.Model):
+    animal_picture = models.CharField()
+    animal_id = models.AutoField(primary_key=True)
+    animal_name = models.CharField(max_length=50)
+    animal_type = models.CharField(max_length=50)
+    animal_age = models.IntegerField()
+    animal_location = models.CharField(max_length=30)
+    animal_breed = models.CharField(max_length=20)
+    available = models.IntegerField()
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="carts")
+    animal_price = models.IntegerField()
+    animal_description = models.CharField(max_length=200)
+

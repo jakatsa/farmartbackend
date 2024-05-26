@@ -14,9 +14,10 @@ from api.views import (
     UserProfileView,
     AnimalViewingFarmer,
     AnimalViewDetails,
-
     Payment,
-    CartDetails
+    CartViewModelDetails,
+ 
+    ViewCartDetails
 
 )
 from django.conf.urls.static import static
@@ -37,8 +38,9 @@ urlpatterns = [
     path('api/daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('api/payments', views.index, name = "payment"),
     path("api/mpesapayment", Payment.as_view(), name = "payments"),
-
-    path("api/cart", CartDetails.as_view(), name = "cart"),
+    # path("api/carts/<int:cart_id>", CartViewDetails.as_view(), name = "cart"),
+    # path("api/cart", ViewCartDetails.as_view(), name = "cart"),
+    path("api/carts", CartViewModelDetails.as_view(), name = "cart-items"),
 
 
     #path(
