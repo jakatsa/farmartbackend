@@ -65,7 +65,7 @@ def seed():
             animal_picture=data['image'],
             animal_name=data['type'],
             animal_type=data['species'],
-            animal_age=f'{randint(1, 5)} years',
+            animal_age = randint(1, 200),
             animal_location=choice(animal_locations),
             animal_breed=data['breed'],
             animal_gender=data['gender'],
