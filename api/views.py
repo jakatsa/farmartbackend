@@ -269,7 +269,7 @@ class CartDetails(APIView):
 def index(request):
     cl = MpesaClient()
     # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-    phone_number = '0792708171'
+    phone_number = '0798255754'
     amount = 1
     account_reference = 'reference'
     transaction_desc = 'Description'
