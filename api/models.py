@@ -32,7 +32,7 @@ class Farmer(models.Model):
 
 
 class Animal(models.Model):
-    animal_picture = models.ImageField(default="fall.png", blank=True)
+    animal_picture = models.CharField()
     animal_id = models.AutoField(primary_key=True)
     animal_name = models.CharField(max_length=50)
     animal_type = models.CharField(max_length=50)
