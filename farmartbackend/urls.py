@@ -14,8 +14,10 @@ from api.views import (
     UserProfileView,
     AnimalViewingFarmer,
     AnimalViewDetails,
+
     Payment,
     CartDetails
+
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -35,7 +37,9 @@ urlpatterns = [
     path('api/daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('api/payments', views.index, name = "payment"),
     path("api/mpesapayment", Payment.as_view(), name = "payments"),
+
     path("api/cart", CartDetails.as_view(), name = "cart"),
+
 
     #path(
        # "api/auth/register/", UserRegistrationView.as_view(), name="user-registration"
