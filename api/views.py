@@ -14,7 +14,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-
+from django.http import Http404
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -215,3 +215,20 @@ class OrderAcceptView(APIView):
             )
 
         return Response({"message": f"Order {action.capitalize()}ed successfully"})
+
+
+class AnimalViewDetails(APIView):
+    def get_object(self, animal_id):
+        try:
+            return Animal.objects.get(animal_id = animal_id)
+        except Animal.DoesNotExist:
+            raise Http404
+        
+
+    def get(self, request, animal_id):
+        try:
+            product = self.get_object(animal_id)
+            serializer = AnimalSerializer(product)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        except Animal.DoesNotExist:
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
