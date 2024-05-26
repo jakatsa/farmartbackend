@@ -42,6 +42,8 @@ class Animal(models.Model):
     animal_age = models.IntegerField()
     animal_location = models.CharField(max_length=30)
     animal_breed = models.CharField(max_length=20)
+    animal_category = models.CharField(max_length=20)
+    animal_gender = models.CharField()
     available = models.IntegerField()
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="animals")
     animal_price = models.IntegerField()
