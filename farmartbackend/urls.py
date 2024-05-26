@@ -17,6 +17,9 @@ from api.views import (
 )
 from django.conf.urls.static import static
 from django.conf import settings
+from api import views
+
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,6 +30,8 @@ urlpatterns = [
     path("api/orders/accept/<int:pk>/", OrderAcceptView.as_view(), name="order-accept"),
     path("api/animals/farmer/", AnimalViewingFarmer.as_view(), name="animals-farmer"),
     path('api/animals/<int:animal_id>', AnimalViewDetails.as_view(), name = "animal-details"),
+    path('api/daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
+    path('api/payments', views.index, name = "payment"),
 
     #path(
        # "api/auth/register/", UserRegistrationView.as_view(), name="user-registration"
@@ -45,6 +50,7 @@ urlpatterns = [
         name="customer-registration",
     ),
     # Add other URLs here
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
