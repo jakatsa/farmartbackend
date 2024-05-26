@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Customer, Farmer, Animal, Orders
+from .models import User, Customer, Farmer, Animal, Orders, Cart
 from django.utils import timezone
 
 class UserSerializer(serializers.ModelSerializer):
@@ -99,5 +99,7 @@ class OrderSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class CartSerializer(serializers.ModelSerializer):
+    
     class Meta:
+        model = Cart
         fields = '__all__'
