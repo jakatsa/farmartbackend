@@ -13,6 +13,9 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=15, choices=ROLE_CHOICES)
 
+    class Meta:
+        app_label = 'api'
+
 
 class Customer(models.Model):
     profile_picture = models.ImageField(default="fall.png", blank=True)
@@ -32,18 +35,17 @@ class Farmer(models.Model):
 
 
 class Animal(models.Model):
-    animal_picture = models.ImageField(default="fall.png", blank=True)
+    animal_picture = models.CharField()
     animal_id = models.AutoField(primary_key=True)
     animal_name = models.CharField(max_length=50)
     animal_type = models.CharField(max_length=50)
-    animal_age = models.IntegerField()
+    animal_age = models.CharField(max_length=10)
     animal_location = models.CharField(max_length=30)
     animal_breed = models.CharField(max_length=20)
     available = models.IntegerField()
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="animals")
     animal_price = models.IntegerField()
     animal_description = models.CharField(max_length=200)
-
 
 class Orders(models.Model):
     ORDER_STATUS = (
@@ -58,6 +60,6 @@ class Orders(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE, related_name="orders")
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="orders")
     order_date = models.DateField(auto_now_add=True)
+    animal_name=models.CharField(max_length=30,blank=True)
     quantity = models.IntegerField(blank=True)
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, blank=True)
-

@@ -16,8 +16,10 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 black = "*"
 pillow = "*"
+dj-database-url = "*"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.10"
