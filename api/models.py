@@ -72,7 +72,7 @@ class AccessToken(models.Model):
         return self.token
 
 class Cart(models.Model):
-    animal_picture = models.CharField()
+    animal_image = models.CharField(max_length=50)
     cart_id = models.AutoField(primary_key=True)
     animal_name = models.CharField(max_length=50)
     animal_price = models.IntegerField()
