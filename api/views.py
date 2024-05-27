@@ -195,7 +195,8 @@ class OrderListView(generics.ListAPIView):
         print(user.username)
         if user.role == "customer":
             customer_id = self.request.data.get('customer_id')
-            return Orders.objects.filter(customer_id=customer_id)
+            orders = Orders.objects.filter(customer=user.customer_account)
+            return orders
         elif user.role == "farmer":
             return Orders.objects.filter(
                  #farmer=user.farmer_account,order_status=("accepted"))
