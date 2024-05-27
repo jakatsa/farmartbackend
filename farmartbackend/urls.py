@@ -14,6 +14,8 @@ from api.views import (
     UserProfileView,
     AnimalViewingFarmer,
     AnimalViewDetails,
+    FarmerInfoView,
+    AnimalDeleteView,
 
     Payment,
     CartDetails
@@ -27,6 +29,7 @@ from api import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('farmer-info/', FarmerInfoView.as_view(), name='farmer_info'),
     path("api/user/profile",UserProfileView.as_view(),name="profile"),
     path("api/animals/", AnimalViewing.as_view(), name="animals"),
     path("api/orders/create/", CreateOrderView.as_view(), name="order-create"),
@@ -45,6 +48,7 @@ urlpatterns = [
        # "api/auth/register/", UserRegistrationView.as_view(), name="user-registration"
    # ),
     path("api/animals/add/", AnimalCreationView.as_view(), name="animal-creation"),
+    path('api/animals/delete/<int:animal_id>/', AnimalDeleteView.as_view(), name='animal-delete'),
     path("api/auth/login/", UserLoginView.as_view(), name="user-login"),
     path("api/auth/logout/", UserLogoutView.as_view(), name="user-logout"),
     path(

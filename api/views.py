@@ -18,6 +18,19 @@ from rest_framework import generics
 from django.http import Http404, HttpResponse
 from django_daraja.mpesa.core import MpesaClient
 
+
+class FarmerInfoView(APIView):
+    def get(self, request):
+        user = request.user
+        if not user.is_authenticated or not user.role == 'farmer':
+            return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            farmer = Farmer.objects.get(user=user)
+            serializer = FarmerSerializer(farmer)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Farmer.DoesNotExist:
+            return Response({'error': 'Farmer not found'}, status=status.HTTP_404_NOT_FOUND)
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -76,7 +89,16 @@ class StudentRegistrationView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+class AnimalDeleteView(APIView):
+    def delete(self, request, animal_id):
+        try:
+            animal = Animal.objects.get(pk=animal_id)
+        except Animal.DoesNotExist:
+            return Response({"message": "Animal not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        animal.delete()
+        
+        return Response({"message": "Animal deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 class UserLoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         username = request.data.get("username")
